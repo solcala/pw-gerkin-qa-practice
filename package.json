@@ -1,0 +1,65 @@
+{
+  "name": "pw-gerkin-qa-practice",
+  "version": "1.0.0",
+  "description": "Playwright-BDD test automation for qa-practice.razvanvancea.ro",
+  "scripts": {
+    "bddgen:clean": "rm -rf .features-gen",
+    "bddgen": "npm run bddgen:clean && npx bddgen",
+    "test": "npm run bddgen && playwright test",
+    "test:smoke": "npm run bddgen -- --tags '@smoke' && playwright test",
+    "test:sanity": "npm run bddgen -- --tags '@sanity' && playwright test",
+    "test:regression": "npm run bddgen -- --tags '@regression' && playwright test",
+    "test:e2e": "npm run bddgen -- --tags '@e2e' && playwright test",
+    "test:ci": "npm run bddgen -- --tags 'not @flaky' && playwright test",
+    "test:ui": "npm run bddgen && playwright test --ui",
+    "test:headed": "npm run bddgen && playwright test --headed",
+    "allure:generate": "allure generate allure-results -o allure-report --clean",
+    "allure:open": "allure open allure-report",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "docker:test:smoke": "docker compose -f docker/docker-compose.yml run --rm test-smoke",
+    "docker:test:regression": "docker compose -f docker/docker-compose.yml run --rm test-regression",
+    "docker:test:e2e": "docker compose -f docker/docker-compose.yml run --rm test-e2e",
+    "docker:test:ci": "docker compose -f docker/docker-compose.yml run --rm test-ci",
+    "docker:lint": "docker compose -f docker/docker-compose.yml run --rm lint",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "playwright",
+    "bdd",
+    "gherkin",
+    "qa-practice",
+    "e2e"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "allure-commandline": "^2.34.0",
+    "allure-playwright": "^3.2.2",
+    "eslint": "^9.22.0",
+    "eslint-plugin-playwright": "^2.2.0",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "playwright-bdd": "^8.5.1",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
+  }
+}
